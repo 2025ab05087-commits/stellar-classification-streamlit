@@ -97,3 +97,8 @@ project-folder/
 
 ## 7. Deployment
 The application was deployed on **Streamlit Community Cloud** and can be accessed via the provided live link.
+
+## Live Streamlit App
+The application is deployed on Streamlit Community Cloud and can be accessed here:
+
+https://2025ab05087-ml-assignment-2.streamlit.app/
