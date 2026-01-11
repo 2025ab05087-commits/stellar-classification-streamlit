@@ -21,18 +21,14 @@ FEATURE_COLUMNS = [
 ]
 
 
-# -----------------------------
 # App Title
-# -----------------------------
 st.title("Stellar Classification using Machine Learning")
 st.write(
     "This application classifies astronomical objects into **Star, Galaxy, or Quasar** "
     "using multiple machine learning models."
 )
 
-# -----------------------------
 # Load Models
-# -----------------------------
 @st.cache_resource
 def load_models():
     models = {
@@ -49,9 +45,7 @@ def load_models():
 
 models, scaler, label_encoder = load_models()
 
-# -----------------------------
 # Upload CSV
-# -----------------------------
 st.header("Upload Test Dataset")
 uploaded_file = st.file_uploader("Upload CSV file (test data only)", type=["csv"])
 
@@ -60,32 +54,24 @@ if uploaded_file is not None:
     st.write("Preview of uploaded data:")
     st.dataframe(data.head())
 
-    # -----------------------------
     # Model Selection
-    # -----------------------------
     model_name = st.selectbox("Select Model", list(models.keys()))
     model = models[model_name]
 
-    # -----------------------------
     # Prediction
-    # -----------------------------
     if st.button("Run Prediction"):
         try:
             data_copy = data.copy()
 
-            # STEP 1: Extract true labels IF present
             y_true = None
             if 'class' in data_copy.columns:
                 y_true = label_encoder.transform(data_copy['class'])
                 data_copy = data_copy.drop(columns=['class'])
 
-            # STEP 2: Select only training features
             X = data_copy[FEATURE_COLUMNS]
 
-            # STEP 3: Scale features
             X_scaled = scaler.transform(X)
 
-            # STEP 4: Predict
             y_pred = model.predict(X_scaled)
             y_prob = model.predict_proba(X_scaled)
 
@@ -94,7 +80,6 @@ if uploaded_file is not None:
             st.subheader("Prediction Results")
             st.write(pd.Series(y_pred_labels).value_counts())
 
-            # STEP 5: Metrics & Confusion Matrix
             if y_true is not None:
                 acc = accuracy_score(y_true, y_pred)
                 prec = precision_score(y_true, y_pred, average="macro")
