@@ -28,6 +28,17 @@ st.write(
     "using multiple machine learning models."
 )
 
+st.header("Download Sample Test Dataset")
+
+with open("test.csv", "rb") as file:
+    st.download_button(
+        label="Download test.csv",
+        data=file,
+        file_name="test.csv",
+        mime="text/csv"
+    )
+
+
 # Load Models
 @st.cache_resource
 def load_models():
