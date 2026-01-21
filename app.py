@@ -48,6 +48,13 @@ models, scaler, label_encoder = load_models()
 # Upload CSV
 st.header("Upload Test Dataset")
 uploaded_file = st.file_uploader("Upload CSV file (test data only)", type=["csv"])
+if uploaded_file is not None:
+    st.download_button(
+        label="Download Uploaded Test CSV",
+        data=uploaded_file.getvalue(),
+        file_name=uploaded_file.name,
+        mime="text/csv"
+    )
 
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
